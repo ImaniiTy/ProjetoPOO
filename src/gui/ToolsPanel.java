@@ -40,6 +40,7 @@ public class ToolsPanel extends JPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		cursor.setPreferredSize(new Dimension(58, 40));
 		cursor.setMaximumSize(new Dimension(58,40));
 		cursor.setBackground(new Color(63, 63, 63));
