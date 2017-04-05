@@ -11,6 +11,7 @@ public class Editor {
 	private final int WIDTH = 750, HEIGHT = 600;
 	public static final int RETANGULO = 1;
 	public static final int TRIANGULO = 2;
+	public static final int CIRCUNFERENCIA = 3;
 	private ArrayList<Forma> formas;
 	private BufferedImage bimage;
 	private Graphics2D bImageGraphics;
@@ -54,6 +55,9 @@ public class Editor {
 			break;
 		case TRIANGULO:
 			lastP = new Triangulo(cor, locationsX, locationsY);
+			break;
+		case CIRCUNFERENCIA:
+			lastP = new Circuferencia(cor, locationsX, locationsY);
 			break;
 		default:
 			lastP = new Retangulo(cor, locationsX, locationsY);
