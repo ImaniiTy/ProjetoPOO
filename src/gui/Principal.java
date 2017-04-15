@@ -65,17 +65,16 @@ public class Principal {
 		GridBagConstraints gbc_toolsPanel = new GridBagConstraints();
 		gbc_toolsPanel.fill = GridBagConstraints.BOTH;
 		gbc_toolsPanel.gridx = 0;
-		gbc_toolsPanel.gridy = 0;
-		gbc_toolsPanel.gridheight = 2;
+		gbc_toolsPanel.gridy = 1;
+		//gbc_toolsPanel.gridheight = 2;
 		frame.getContentPane().add(toolsPanel, gbc_toolsPanel);
 		ColorsPanel colorsPanel = new ColorsPanel(drawArea);
 		GridBagConstraints gbc_colorsPanel = new GridBagConstraints();
-		gbc_colorsPanel.gridx = 1;
+		gbc_colorsPanel.fill = GridBagConstraints.BOTH;
+		gbc_colorsPanel.gridx = 0;
 		gbc_colorsPanel.gridy = 0;
-		//gbc_colorsPanel.gridwidth = 2;
+		gbc_colorsPanel.gridwidth = 2;
 		frame.getContentPane().add(colorsPanel, gbc_colorsPanel);
-		//Draw Area Forms Config
-		
 		//Console config
 		JFrame consoleFrame = new JFrame();
 		consoleFrame.setBounds(960, 540, 500, 300);

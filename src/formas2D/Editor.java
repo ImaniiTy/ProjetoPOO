@@ -5,6 +5,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class Editor {
@@ -64,7 +74,6 @@ public class Editor {
 			break;
 		}
 		formas.add(lastP);
-		drawInBufferedImage();
 	}
 	
 	public void removeLastForma() {
@@ -81,7 +90,34 @@ public class Editor {
 	}
 	
 	public void drawImage(Graphics g) {
+		drawInBufferedImage();
 		g.drawImage(bimage, 0, 0, null);
+	}
+	
+	public void salvarFormas(File f) {
+		try {
+			//PrintStream ps = new PrintStream(f);
+			FileOutputStream fos = new FileOutputStream(f);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(formas);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void carregarFormas(File f) {
+		try {
+			FileInputStream fis = new FileInputStream(f);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			formas = (ArrayList<Forma>) ois.readObject();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

@@ -3,96 +3,93 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class ColorsPanel extends JPanel {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JFileChooser fileChooser = new JFileChooser();
 	private FlowLayout layout;
 	private DrawAreaPanel drawArea;
+	private ColorChooser myColorChooser;
+	private JFrame colorChooserFrame;
 	
 	public ColorsPanel(DrawAreaPanel drawArea) {
 		this.drawArea = drawArea;
-		layout = new FlowLayout(FlowLayout.LEFT);
+		layout = new FlowLayout(FlowLayout.LEFT, 0, 1);
 		setLayout(layout);
-		setPreferredSize(new Dimension(700,50));
-		JButton red = new JButton();
-		red.setBackground(Color.RED);
-		red.setPreferredSize(new Dimension(40, 40));
-		red.addActionListener(new ActionListener() {
+		setPreferredSize(new Dimension(700,40));
+		setBackground(Color.DARK_GRAY);
+		setForeground(Color.DARK_GRAY);
+		JButton abrir = new JButton();
+		abrir.setBackground(Color.DARK_GRAY);
+		abrir.setPreferredSize(new Dimension(35, 35));
+		abrir.setHorizontalAlignment(SwingConstants.CENTER);
+		abrir.setBorder(null);
+		try {
+			abrir.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("OpenFIcon.gif"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		abrir.setContentAreaFilled(false);
+		abrir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				drawArea.getEditor().setCor(Color.RED);
+				// TODO Auto-generated method stub
+				int returnval = fileChooser.showOpenDialog(drawArea);
+				if (returnval == JFileChooser.APPROVE_OPTION) {
+					drawArea.getEditor().carregarFormas(fileChooser.getSelectedFile());
+					drawArea.repaint();
+				}
 			}
 		});
-		JButton blue = new JButton();
-		blue.setBackground(Color.BLUE);
-		blue.setPreferredSize(new Dimension(40, 40));
-		blue.addActionListener(new ActionListener() {
+		JButton salvar = new JButton();
+		salvar.setText("Salvar");
+		salvar.setBackground(Color.DARK_GRAY);
+		salvar.setPreferredSize(new Dimension(35, 35));
+		salvar.setHorizontalAlignment(SwingConstants.CENTER);
+		salvar.setBorder(null);
+		salvar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				drawArea.getEditor().setCor(Color.BLUE);
+				// TODO Auto-generated method stub
+				int returnval = fileChooser.showSaveDialog(drawArea);
+				if (returnval == JFileChooser.APPROVE_OPTION) {
+					drawArea.getEditor().salvarFormas(fileChooser.getSelectedFile());
+				}
 			}
 		});
-		JButton green = new JButton();
-		green.setBackground(Color.GREEN);
-		green.setPreferredSize(new Dimension(40, 40));
-		green.addActionListener(new ActionListener() {
+		add(abrir); add(salvar);
+		//color chooser
+		myColorChooser = new ColorChooser();
+		colorChooserFrame = new JFrame();
+		colorChooserFrame.setBounds(0, 0, 400, 300);
+		colorChooserFrame.getContentPane().add(myColorChooser);
+		JButton moreColors = new JButton("Mais Cores");
+		moreColors.setBackground(Color.DARK_GRAY);
+		moreColors.setPreferredSize(new Dimension(35, 35));
+		moreColors.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				drawArea.getEditor().setCor(Color.GREEN);
+				// TODO Auto-generated method stub
+				colorChooserFrame.setVisible(true);
 			}
 		});
-		JButton black = new JButton();
-		black.setBackground(Color.BLACK);
-		black.setPreferredSize(new Dimension(40, 40));
-		black.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				drawArea.getEditor().setCor(Color.BLACK);
-			}
-		});
-		JButton yellow = new JButton();
-		yellow.setBackground(Color.YELLOW);
-		yellow.setPreferredSize(new Dimension(40, 40));
-		yellow.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				drawArea.getEditor().setCor(Color.YELLOW);
-			}
-		});
-		JButton purple = new JButton();
-		purple.setBackground(Color.MAGENTA);
-		purple.setPreferredSize(new Dimension(40, 40));
-		purple.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				drawArea.getEditor().setCor(Color.MAGENTA);
-			}
-		});
-		JButton gray = new JButton();
-		gray.setBackground(Color.GRAY);
-		gray.setPreferredSize(new Dimension(40, 40));
-		gray.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				drawArea.getEditor().setCor(Color.GRAY);
-			}
-		});
-		JButton cyan = new JButton();
-		cyan.setBackground(Color.CYAN);
-		cyan.setPreferredSize(new Dimension(40, 40));
-		cyan.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				drawArea.getEditor().setCor(Color.CYAN);
-			}
-		});
-		add(red); add(blue); add(green); add(black); add(yellow); add(purple); add(gray); add(cyan);
+		add(moreColors);
 	}
 }

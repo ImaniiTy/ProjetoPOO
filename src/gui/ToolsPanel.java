@@ -44,6 +44,7 @@ public class ToolsPanel extends JPanel {
 		cursor.setPreferredSize(new Dimension(58, 40));
 		cursor.setMaximumSize(new Dimension(58,40));
 		cursor.setBackground(new Color(63, 63, 63));
+		cursor.setContentAreaFilled(false);
 		add(cursor);
 		JButton retangulo = new JButton();
 		retangulo.setBorder(new LineBorder(Color.DARK_GRAY));
@@ -57,6 +58,7 @@ public class ToolsPanel extends JPanel {
 		retangulo.setPreferredSize(new Dimension(58, 40));
 		retangulo.setMaximumSize(new Dimension(58,40));
 		retangulo.setBackground(new Color(63, 63, 63));
+		retangulo.setContentAreaFilled(false);
 		add(retangulo);
 		JButton circulo = new JButton();
 		circulo.setBorder(new LineBorder(Color.DARK_GRAY));
@@ -70,6 +72,7 @@ public class ToolsPanel extends JPanel {
 		circulo.setPreferredSize(new Dimension(58, 40));
 		circulo.setMaximumSize(new Dimension(58,40));
 		circulo.setBackground(new Color(63, 63, 63));
+		circulo.setContentAreaFilled(false);
 		add(circulo);
 		JButton triangulo = new JButton();
 		triangulo.setBorder(new LineBorder(Color.DARK_GRAY));
@@ -83,6 +86,9 @@ public class ToolsPanel extends JPanel {
 		triangulo.setPreferredSize(new Dimension(58, 40));
 		triangulo.setMaximumSize(new Dimension(58,40));
 		triangulo.setBackground(new Color(63, 63, 63));
+		triangulo.setContentAreaFilled(false);
+		triangulo.setOpaque(true);
+		triangulo.setSelectedIcon(null);
 		add(triangulo);
 		//Button Logic
 		retangulo.addActionListener(new ActionListener() {
