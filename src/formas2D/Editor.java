@@ -152,10 +152,11 @@ public class Editor {
 	
 	public void salvarFormas(File f) {
 		try {
-			//PrintStream ps = new PrintStream(f);
 			FileOutputStream fos = new FileOutputStream(f);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(formas);
+			for (Forma forma : formas) {
+                            oos.writeObject(forma);
+                         }
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -166,8 +167,14 @@ public class Editor {
 		try {
 			FileInputStream fis = new FileInputStream(f);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			formas = (ArrayList<Forma>) ois.readObject();
-		} catch (IOException e) {
+                        while(true){
+                            Forma forma = (Forma) ois.readObject();
+                            formas.add(forma);
+                            list.addElement(forma);
+                        }
+                }catch (EOFException e){
+                    
+                } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -175,5 +182,4 @@ public class Editor {
 			e.printStackTrace();
 		}
 	}
-	
 }
