@@ -16,20 +16,23 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class ColorsPanel extends JPanel {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+        private final Color FONT_COLOR = Color.WHITE;
 	private JFileChooser fileChooser = new JFileChooser();
 	private FlowLayout layout;
 	private DrawAreaPanel drawArea;
 	private ColorChooser myColorChooser;
 	private JFrame colorChooserFrame;
-	
+	private Color corEscolhida = Color.WHITE;
+        
 	public ColorsPanel(DrawAreaPanel drawArea) {
 		this.drawArea = drawArea;
-		layout = new FlowLayout(FlowLayout.LEFT, 0, 1);
+		layout = new FlowLayout(FlowLayout.LEFT, 5, 1);
 		setLayout(layout);
 		setPreferredSize(new Dimension(700,40));
 		setBackground(Color.DARK_GRAY);
@@ -60,6 +63,7 @@ public class ColorsPanel extends JPanel {
 		JButton salvar = new JButton();
 		salvar.setText("Salvar");
 		salvar.setBackground(Color.DARK_GRAY);
+                salvar.setForeground(FONT_COLOR);
 		salvar.setPreferredSize(new Dimension(35, 35));
 		salvar.setHorizontalAlignment(SwingConstants.CENTER);
 		salvar.setBorder(null);
@@ -76,6 +80,7 @@ public class ColorsPanel extends JPanel {
 		JButton limparTela = new JButton();
 		limparTela.setText("Limpar Tela");
 		limparTela.setBackground(Color.DARK_GRAY);
+                limparTela.setForeground(FONT_COLOR);
 		limparTela.setPreferredSize(new Dimension(35, 35));
 		limparTela.setHorizontalAlignment(SwingConstants.CENTER);
 		limparTela.setBorder(null);
@@ -87,23 +92,36 @@ public class ColorsPanel extends JPanel {
 				drawArea.repaint();
 			}
 		});
-		add(abrir); add(salvar); add(limparTela);
+		
 		//color chooser
 		myColorChooser = new ColorChooser();
 		colorChooserFrame = new JFrame();
 		colorChooserFrame.setBounds(0, 0, 400, 300);
 		colorChooserFrame.getContentPane().add(myColorChooser);
+                JLabel labelCor = new JLabel("");
+                labelCor.setBackground(Color.WHITE);
+                labelCor.setPreferredSize(new Dimension(35, 35));
+                labelCor.setOpaque(true);
+                
+               
 		JButton moreColors = new JButton("Mais Cores");
 		moreColors.setBackground(Color.DARK_GRAY);
+                moreColors.setForeground(FONT_COLOR);
 		moreColors.setPreferredSize(new Dimension(35, 35));
 		moreColors.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				colorChooserFrame.setVisible(true);
+                                Color corAux = myColorChooser.showDialog(null, "COR", Color.WHITE);
+                                if(corAux != null){
+                                    corEscolhida = corAux;
+                                }
+                                drawArea.getEditor().setCor(corEscolhida);
+                                labelCor.setBackground(corEscolhida);
 			}
 		});
-		add(moreColors);
+		
+                //Add..
+                add(abrir); add(salvar); add(limparTela); add(moreColors);  add(labelCor);
 	}
 }
