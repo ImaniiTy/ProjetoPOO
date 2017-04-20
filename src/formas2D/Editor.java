@@ -62,10 +62,12 @@ public class Editor {
 	}
 	
 	public void addOnRelease(int[] locationsX, int[] locationsY) {
-		clearDragTrash();
-		addForma(locationsX, locationsY);
-		addOnList(formas.get(formas.size() - 1));
-		clearLastP();
+		if(shape != MOUSE){
+			clearDragTrash();
+			addForma(locationsX, locationsY);
+			addOnList(formas.get(formas.size() - 1));
+			clearLastP();
+            }
 	}
 	public ArrayList<Forma> getArrayFormas() {
 		return this.formas;
