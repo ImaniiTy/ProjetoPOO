@@ -1,16 +1,13 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.crypto.spec.GCMParameterSpec;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,7 +15,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import formas2D.Editor;
 import formas2D.Forma;
 
 @SuppressWarnings("serial")
@@ -28,6 +24,7 @@ public class ListaFormas extends JFrame {
 	private DefaultListModel<Forma> listModel;
 	private DrawAreaPanel drawArea;
 	private GridBagLayout gbLayout;
+        
 	
 	public ListaFormas (Dimension resolution, DrawAreaPanel drawArea) {
 		this.resolution = resolution;

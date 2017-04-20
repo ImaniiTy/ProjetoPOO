@@ -17,8 +17,10 @@ public class DrawAreaPanel extends JPanel{
 	private MouseAdapter mAdapter;
 	private MouseMotionAdapter mMotionAdapter;
 	private Editor editor;
+        private Principal principalFrame;
 	
-	public DrawAreaPanel() {
+	public DrawAreaPanel(Principal principalFrame) {
+            this.principalFrame = principalFrame;
 		setLayout(new BorderLayout());
 		setBackground(Color.WHITE);
 		editor = new Editor();
@@ -80,8 +82,12 @@ public class DrawAreaPanel extends JPanel{
 	}
 	
 	public Editor getEditor() {
-		return this.editor;
+		return editor;
 	}
+        
+        public Principal getPrincipalFrame(){
+            return principalFrame;
+        }
 	
 	@Override
 	protected void paintComponent(Graphics g) {

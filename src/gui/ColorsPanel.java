@@ -38,6 +38,7 @@ public class ColorsPanel extends JPanel {
 		setBackground(Color.DARK_GRAY);
 		setForeground(Color.DARK_GRAY);
 		JButton abrir = new JButton();
+                //Abrir Arquivo
 		abrir.setBackground(Color.DARK_GRAY);
 		abrir.setPreferredSize(new Dimension(35, 35));
 		abrir.setHorizontalAlignment(SwingConstants.CENTER);
@@ -60,6 +61,7 @@ public class ColorsPanel extends JPanel {
 				}
 			}
 		});
+                //Salvar Arquivo
 		JButton salvar = new JButton();
 		salvar.setText("Salvar");
 		salvar.setBackground(Color.DARK_GRAY);
@@ -77,6 +79,7 @@ public class ColorsPanel extends JPanel {
 				}
 			}
 		});
+                //Limpar Tela
 		JButton limparTela = new JButton();
 		limparTela.setText("Limpar Tela");
 		limparTela.setBackground(Color.DARK_GRAY);
@@ -120,8 +123,22 @@ public class ColorsPanel extends JPanel {
                                 labelCor.setBackground(corEscolhida);
 			}
 		});
-		
+		//Abrir Janela de Edicao
+                JButton edit = new JButton();
+                edit.setText("Abrir Janela de Edição");
+		edit.setBackground(Color.DARK_GRAY);
+                edit.setForeground(FONT_COLOR);
+		edit.setPreferredSize(new Dimension(35, 35));
+		edit.setHorizontalAlignment(SwingConstants.CENTER);
+		edit.setBorder(null);
+                edit.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        drawArea.getPrincipalFrame().getLista().setVisible(true);
+                    }
+		});
+                
                 //Add..
-                add(abrir); add(salvar); add(limparTela); add(moreColors);  add(labelCor);
+                add(abrir); add(salvar); add(limparTela); add(moreColors);  add(labelCor); add(edit);
 	}
 }
