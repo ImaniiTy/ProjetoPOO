@@ -7,6 +7,8 @@ import java.awt.Polygon;
 public abstract class Forma extends Polygon {
 	protected Color cor;
 	protected int locationsX[],locationsY[];
+	protected boolean isSelected = false;
+
 	/**
 	 * @param cor
 	 * @param x localizacao na tela
@@ -52,6 +54,22 @@ public abstract class Forma extends Polygon {
 	 */
 	public void setlocationsY(int locationsY[]) {
 		this.locationsY = locationsY;
+	}
+	/**
+	 * @return the isSelected
+	 */
+	public boolean IsSelected() {
+		return isSelected;
+	}
+	/**
+	 * @param isSelected the isSelected to set
+	 */
+	public void setSelected() {
+		this.isSelected = true;
+	}
+	
+	public void setUnselected() {
+		this.isSelected = false;
 	}
 	
 	

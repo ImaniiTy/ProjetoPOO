@@ -15,6 +15,7 @@ import java.awt.LayoutManager;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.Toolkit;
 
 import javax.swing.*;
 import javax.swing.Box.Filler;
@@ -34,8 +35,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 
 public class Principal {
-	JFrame frame = new JFrame();
-	int cX,cY,oX,oY,formsQtd;
+	protected static final int ALTURA = 600, LARGURA = 800;
+	protected static final Dimension screenResolution = Toolkit.getDefaultToolkit().getScreenSize();
+	private JFrame frame = new JFrame();
+	private ListaFormas lista;
 	
 	public Principal() {
 		setupGui();
@@ -46,10 +49,11 @@ public class Principal {
 		frame.setVisible(true);
 		GridBagLayout frameLayout = new GridBagLayout();
 		frameLayout.rowWeights = new double[]{0.0};
+		frame.setBounds(screenResolution.width/2 - (LARGURA/2), screenResolution.height/2 - (ALTURA/2), LARGURA, ALTURA);
 		frame.getContentPane().setLayout(frameLayout);
 		frame.getContentPane().setPreferredSize(new Dimension(800, 600));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
+		//frame.pack();
 		frame.setResizable(false);
 		//frame.setMaximizedBounds(new Rectangle(800, 600));
 		//Panels Config
@@ -75,6 +79,8 @@ public class Principal {
 		gbc_colorsPanel.gridy = 0;
 		gbc_colorsPanel.gridwidth = 2;
 		frame.getContentPane().add(colorsPanel, gbc_colorsPanel);
+		lista = new ListaFormas(frame.getSize(),drawArea);
+		lista.setVisible(true);
 		//Console config
 		JFrame consoleFrame = new JFrame();
 		consoleFrame.setBounds(960, 540, 500, 300);
@@ -102,6 +108,7 @@ public class Principal {
 			
 		});
 		fileMenu.add(abrir); fileMenu.add(salvar); fileMenu.add(salvarComo); fileMenu.add(console);
+		
 		abrir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {

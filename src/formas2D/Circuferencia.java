@@ -23,6 +23,10 @@ public class Circuferencia extends Forma {
 			addPoint(x, y);
 		}
 	}
+	
+	public String toString() {
+		return "Circunferencia";
+	}
 	/* Nao usado, mas util
 	public double calcularDistanciaPontos() {
 		return Math.cbrt(Math.pow((locationsX[0] - locationsX[2]), 2) + Math.pow((locationsY[0] - locationsY[2]), 2));

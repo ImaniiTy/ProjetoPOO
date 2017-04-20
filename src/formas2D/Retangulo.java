@@ -23,5 +23,7 @@ public class Retangulo extends Forma {
 		return N_PONTOS;
 	}
 	
-	
+	public String toString() {
+		return "Retangulo";
+	}
 }

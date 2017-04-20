@@ -21,5 +21,9 @@ public class Triangulo extends Forma {
 	 */
 	public int getN_PONTOS() {
 		return N_PONTOS;
-	}	
+	}
+	
+	public String toString() {
+		return "Triangulo";
+	}
 }

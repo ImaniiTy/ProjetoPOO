@@ -91,6 +91,14 @@ public class ToolsPanel extends JPanel {
 		triangulo.setSelectedIcon(null);
 		add(triangulo);
 		//Button Logic
+		cursor.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				drawArea.getEditor().setShape(Editor.MOUSE);
+			}
+		});
+		
 		retangulo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

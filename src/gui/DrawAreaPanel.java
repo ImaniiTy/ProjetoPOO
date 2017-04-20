@@ -40,7 +40,7 @@ public class DrawAreaPanel extends JPanel{
 				locationsY[1] = locationsY[2];
 				locationsX[3] = locationsX[2];
 				locationsY[3] = oldy;
-				editor.addForma(locationsX, locationsY);
+				editor.addOnRelease(locationsX, locationsY);
 				repaint();
 			}
 		};
@@ -56,7 +56,7 @@ public class DrawAreaPanel extends JPanel{
 				locationsY[1] = locationsY[2];
 				locationsX[3] = locationsX[2];
 				locationsY[3] = oldy;
-				editor.removeLastForma();
+				editor.clearDragTrash();
 				editor.addForma(locationsX, locationsY);
 				repaint();
 			}

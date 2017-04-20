@@ -73,7 +73,21 @@ public class ColorsPanel extends JPanel {
 				}
 			}
 		});
-		add(abrir); add(salvar);
+		JButton limparTela = new JButton();
+		limparTela.setText("Limpar Tela");
+		limparTela.setBackground(Color.DARK_GRAY);
+		limparTela.setPreferredSize(new Dimension(35, 35));
+		limparTela.setHorizontalAlignment(SwingConstants.CENTER);
+		limparTela.setBorder(null);
+		limparTela.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				drawArea.getEditor().limparListaDeFormas();
+				drawArea.repaint();
+			}
+		});
+		add(abrir); add(salvar); add(limparTela);
 		//color chooser
 		myColorChooser = new ColorChooser();
 		colorChooserFrame = new JFrame();
