@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.image.BufferedImage;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,7 +20,9 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 
+import gui.ErrorPopUp;
 import gui.ListaFormas;
+import gui.OpenErrorPopUp;
 
 public class Editor {
 	private final int WIDTH = 750, HEIGHT = 600;
@@ -35,7 +38,7 @@ public class Editor {
 	private int shape;
 	private Color cor;
 	private DefaultListModel<Forma> list;
-	
+
 	public Editor() {
 		formas = new ArrayList<>();
 		list = new DefaultListModel<>();
@@ -60,30 +63,30 @@ public class Editor {
 	public int getHEIGHT() {
 		return HEIGHT;
 	}
-	
+
 	public void addOnRelease(int[] locationsX, int[] locationsY) {
 		if(shape != MOUSE){
 			clearDragTrash();
 			addForma(locationsX, locationsY);
 			addOnList(formas.get(formas.size() - 1));
 			clearLastP();
-            }
+		}
 	}
 	public ArrayList<Forma> getArrayFormas() {
 		return this.formas;
 	}
-	
+
 	public DefaultListModel<Forma> getList() {
 		return this.list;
 	}
-	
+
 	public void setShape(int shape) {
 		this.shape = shape;
 	}
 	public void setCor (Color cor) {
 		this.cor = cor;
 	}
-	
+
 	public void addForma(int[] locationsX, int[] locationsY) {
 		switch (shape) {
 		case RETANGULO:
@@ -99,29 +102,29 @@ public class Editor {
 		if(shape != MOUSE){
 			formas.add(lastP);
 		}
-		
+
 	}
-	
+
 	public void addOnList(Forma f) {
 		if(shape != MOUSE){
 			list.addElement(f);
 		}
 	}
-	
+
 	public ArrayList<String> getStringFormas() {
 		return stringFormas;
 	}
-	
+
 	public void clearDragTrash() {
 		if(shape != MOUSE){
 			formas.remove(lastP);
 		}
 	}
-	
+
 	public void clearLastP() {
 		lastP = null;
 	}
-	
+
 	public void removeForma(int index) {
 		formas.remove(list.get(index));
 		list.remove(index);
@@ -134,7 +137,7 @@ public class Editor {
 		formas = new ArrayList<>();
 		list.clear();
 	}
-	
+
 	public void drawInBufferedImage() {
 		bImageGraphics.setColor(Color.WHITE);
 		bImageGraphics.fillRect(0, 0, WIDTH, HEIGHT);
@@ -146,39 +149,39 @@ public class Editor {
 			}
 		}
 	}
-	
+
 	public void drawImage(Graphics g) {
 		drawInBufferedImage();
 		g.drawImage(bimage, 0, 0, null);
 	}
-	
+
 	public void salvarFormas(File f) {
 		try {
 			FileOutputStream fos = new FileOutputStream(f);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			for (Forma forma : formas) {
-                            oos.writeObject(forma);
-                         }
+				oos.writeObject(forma);
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void carregarFormas(File f) {
 		try {
 			FileInputStream fis = new FileInputStream(f);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-                        while(true){
-                            Forma forma = (Forma) ois.readObject();
-                            formas.add(forma);
-                            list.addElement(forma);
-                        }
-                }catch (EOFException e){
-                    
-                } catch (IOException e) {
+			while(true){
+				Forma forma = (Forma) ois.readObject();
+				formas.add(forma);
+				list.addElement(forma);
+			}
+		}catch (EOFException e){
+
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ErrorPopUp openError = new OpenErrorPopUp();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
