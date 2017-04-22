@@ -31,7 +31,6 @@ public class Editor {
 	public static final int TRIANGULO = 2;
 	public static final int CIRCUNFERENCIA = 3;
 	private ArrayList<Forma> formas;
-	private ArrayList<String> stringFormas;
 	private BufferedImage bimage;
 	private Graphics2D bImageGraphics;
 	private Forma lastP;
@@ -111,9 +110,6 @@ public class Editor {
 		}
 	}
 
-	public ArrayList<String> getStringFormas() {
-		return stringFormas;
-	}
 
 	public void clearDragTrash() {
 		if(shape != MOUSE){

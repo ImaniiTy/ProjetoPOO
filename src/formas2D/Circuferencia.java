@@ -14,12 +14,22 @@ public class Circuferencia extends Forma {
 	 */
 	public Circuferencia(Color cor, int[] locationsX, int[] locationsY) {
 		super(cor, locationsX, locationsY);
-		raio = Math.abs(locationsX[0] - locationsX[2]);
+		raio = Math.abs(locationsXFromCenter[0] - locationsXFromCenter[2]);
+		double angulo = 0;
+		int x,y;
+		calculatePoints(locationsX[0],locationsY[0]);
+	}
+	public void refactor() {
+		super.calculateLocationsFromCenter();
+		reset();
+		calculatePoints(getCenter().x, getCenter().y);
+	}
+	public void calculatePoints(int centerX, int centerY) {
 		double angulo = 0;
 		int x,y;
 		for (int i = 0; i < 36; i++, angulo += 10) {
-			x = (int) (locationsX[0] + raio*(Math.cos(Math.toRadians(angulo))));
-			y = (int) (locationsY[0] + raio*(Math.sin(Math.toRadians(angulo))));
+			x = (int) (centerX + raio*(Math.cos(Math.toRadians(angulo))));
+			y = (int) (centerY + raio*(Math.sin(Math.toRadians(angulo))));
 			addPoint(x, y);
 		}
 	}

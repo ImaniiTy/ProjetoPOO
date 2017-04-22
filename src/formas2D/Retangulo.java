@@ -12,13 +12,21 @@ public class Retangulo extends Forma {
 	 */
 	public Retangulo(Color cor, int[] locationsX, int[] locationsY) {
 		super(cor, locationsX, locationsY);
-		for (int i = 0; i < N_PONTOS; i++) {
-			addPoint(locationsX[i], locationsY[i]);
-		}
+		calculatePoints();
 	}
 	/**
 	 * @return the nPontos
 	 */
+	public void refactor() {
+		super.calculateLocationsFromCenter();
+		reset();
+		calculatePoints();
+	}
+	public void calculatePoints() {
+		for (int i = 0; i < N_PONTOS; i++) {
+			addPoint(locationsXFromCenter[i], locationsYFromCenter[i]);
+		}
+	}
 	public int getnPontos() {
 		return N_PONTOS;
 	}

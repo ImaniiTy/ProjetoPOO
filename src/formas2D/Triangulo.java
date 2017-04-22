@@ -12,8 +12,16 @@ public class Triangulo extends Forma {
 	 */
 	public Triangulo(Color cor, int[] locationsX, int[] locationsY) {
 		super(cor, locationsX, locationsY);
+		calculatePoints();
+	}
+	public void refactor() {
+		super.calculateLocationsFromCenter();
+		reset();
+		calculatePoints();
+	}
+	public void calculatePoints() {
 		for (int i = 0; i < N_PONTOS; i++) {
-			addPoint(locationsX[i], locationsY[i]);
+			addPoint(locationsXFromCenter[i], locationsYFromCenter[i]);
 		}
 	}
 	/**
