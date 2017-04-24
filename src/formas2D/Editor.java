@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.EOFException;
 import java.io.File;
@@ -82,7 +83,7 @@ public class Editor {
 	public void setShape(int shape) {
 		this.shape = shape;
 	}
-	public void setCor (Color cor) {
+	public void setCor(Color cor) {
 		this.cor = cor;
 	}
 
@@ -126,8 +127,15 @@ public class Editor {
 		list.remove(index);
 	}
 	public void drawBorder(Forma f) {
+		Rectangle fBounds = f.getBounds();
+		bImageGraphics.setColor(Color.BLACK);
+		bImageGraphics.draw(fBounds);
+		fBounds.grow(1, 1);
 		bImageGraphics.setColor(Color.RED);
-		bImageGraphics.draw(f);
+		bImageGraphics.draw(fBounds);
+		fBounds.grow(1, 1);
+		bImageGraphics.setColor(Color.BLACK);
+		bImageGraphics.draw(fBounds);
 	}
 	public void limparListaDeFormas() {
 		formas = new ArrayList<>();

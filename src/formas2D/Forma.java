@@ -85,6 +85,30 @@ public abstract class Forma extends Polygon {
 		this.center = center;
 	}
 	
+	/**
+	 * @return the altura
+	 */
+	public int getAltura() {
+		return altura;
+	}
+	/**
+	 * @return the largura
+	 */
+	public int getLargura() {
+		return largura;
+	}
+	/**
+	 * @param altura the altura to set
+	 */
+	public void setAltura(int altura) {
+		this.altura = altura;
+	}
+	/**
+	 * @param largura the largura to set
+	 */
+	public void setLargura(int largura) {
+		this.largura = largura;
+	}
 	public abstract void refactor();
 	
 	public void calculateAlturaLargura() {

@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -20,11 +21,13 @@ import formas2D.Forma;
 
 @SuppressWarnings("serial")
 public class ListaFormas extends JFrame {
+	public final String LISTPANEL = "Lista";
+	public final String EDITPANEL = "Editar";
 	private Dimension resolution;
 	private JList<Forma> lista;
 	private DefaultListModel<Forma> listModel;
 	private DrawAreaPanel drawArea;
-	private GridBagLayout gbLayout;
+	private CardLayout cardLayout;
         
 	
 	public ListaFormas (Dimension resolution, DrawAreaPanel drawArea) {
@@ -33,15 +36,17 @@ public class ListaFormas extends JFrame {
 		this.listModel = drawArea.getEditor().getList();
 		setupGui();
 	}
-	
+	public JList<Forma> getList() {
+		return lista;
+	}
 	
 	public void setupGui() {
 		//Setup Frame
 		resolution.width = 200;
 		resolution.height = resolution.height + 10;
-		gbLayout = new GridBagLayout();
-		//gbLayout.rowWeights = new double[]{0.0};
-		setLayout(gbLayout);
+		cardLayout =  new CardLayout();
+		setLayout(cardLayout);
+		cardLayout.show(getContentPane(), LISTPANEL);
 		setPreferredSize(resolution);
 		setLocation(Principal.screenResolution.width/2 + (Principal.LARGURA/2 + 10), Principal.screenResolution.height/2 - (Principal.ALTURA/2 + 5));
 		pack();
@@ -63,6 +68,12 @@ public class ListaFormas extends JFrame {
 		JButton delete = new JButton("Delete");
 		delete.setBackground(Color.DARK_GRAY);
 		delete.setForeground(Color.WHITE);
+		//Setup List Panel
+		JPanel listPanel =  new JPanel(new GridBagLayout());
+		//Setup EditPanel
+		EditPanel editPanel = new EditPanel(this);
+		//Setup Card Panel
+		JPanel cardsPanel = new JPanel();
 		//Delete Button Logic
 		delete.addActionListener(new ActionListener() {
 			@Override
@@ -88,9 +99,9 @@ public class ListaFormas extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(!lista.isSelectionEmpty()){
-					lista.getSelectedValue().setSelected();
-					lista.getSelectedValue().setCenter(new Point(50, 50));
-					lista.getSelectedValue().refactor();
+					editPanel.getColorButton().setBackground(lista.getSelectedValue().getCor());
+					drawArea.getEditor().getArrayFormas().get(lista.getSelectedIndex()).setSelected();
+					cardLayout.show(getContentPane(), EDITPANEL);
 					drawArea.repaint();
 				}
 			}
@@ -102,20 +113,26 @@ public class ListaFormas extends JFrame {
 		gbc_ButtonsPanel.fill = GridBagConstraints.BOTH;
 		gbc_ButtonsPanel.gridx = 0;
 		gbc_ButtonsPanel.gridy = 1;
-		gbc_ButtonsPanel.gridwidth = 2;
+		//gbc_ButtonsPanel.gridwidth = 2;
 		gbc_ButtonsPanel.weightx = 1;
 		gbc_ButtonsPanel.weighty = 0.1;
 		
-		GridBagConstraints gbc_Jsp = new GridBagConstraints();
-		gbc_Jsp.anchor = GridBagConstraints.CENTER;
-		gbc_Jsp.fill = GridBagConstraints.BOTH;
-		gbc_Jsp.gridx = 0;
-		gbc_Jsp.gridy = 0;
-		gbc_Jsp.gridwidth = 2;
-		gbc_Jsp.weightx = 1;
-		gbc_Jsp.weighty = 0.9;
+		GridBagConstraints gbc_jsp = new GridBagConstraints();
+		gbc_jsp.anchor = GridBagConstraints.CENTER;
+		gbc_jsp.fill = GridBagConstraints.BOTH;
+		gbc_jsp.gridx = 0;
+		gbc_jsp.gridy = 0;
+		//gbc_jsp.gridwidth = 2;
+		gbc_jsp.weightx = 1;
+		gbc_jsp.weighty = 0.9;
 		//Add..
-		add(jsp, gbc_Jsp); add(buttonsPanel, gbc_ButtonsPanel);
-		
+		listPanel.add(buttonsPanel, gbc_ButtonsPanel); listPanel.add(jsp, gbc_jsp);
+		add(listPanel, LISTPANEL); add(editPanel, EDITPANEL);
+	}
+	public DrawAreaPanel getDrawArea() {
+		return drawArea;
+	}
+	public void changeLayout(String name) {
+		cardLayout.show(getContentPane(), name);
 	}
 }
