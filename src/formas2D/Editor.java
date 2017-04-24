@@ -145,12 +145,16 @@ public class Editor {
 	public void drawInBufferedImage() {
 		bImageGraphics.setColor(Color.WHITE);
 		bImageGraphics.fillRect(0, 0, WIDTH, HEIGHT);
+		Forma selectedForma = null;
 		for (Forma p : formas) {
 			bImageGraphics.setColor(p.getCor());
 			bImageGraphics.fill(p);
 			if(p.IsSelected()) {
-				drawBorder(p);
+				selectedForma = p;
 			}
+		}
+		if(selectedForma != null) {
+			drawBorder(selectedForma);
 		}
 	}
 

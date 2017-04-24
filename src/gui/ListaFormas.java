@@ -23,6 +23,8 @@ import formas2D.Forma;
 public class ListaFormas extends JFrame {
 	public final String LISTPANEL = "Lista";
 	public final String EDITPANEL = "Editar";
+	private EditPanel editPanel;
+	private JPanel listPanel;
 	private Dimension resolution;
 	private JList<Forma> lista;
 	private DefaultListModel<Forma> listModel;
@@ -69,9 +71,9 @@ public class ListaFormas extends JFrame {
 		delete.setBackground(Color.DARK_GRAY);
 		delete.setForeground(Color.WHITE);
 		//Setup List Panel
-		JPanel listPanel =  new JPanel(new GridBagLayout());
+		listPanel =  new JPanel(new GridBagLayout());
 		//Setup EditPanel
-		EditPanel editPanel = new EditPanel(this);
+		editPanel = new EditPanel(this);
 		//Setup Card Panel
 		JPanel cardsPanel = new JPanel();
 		//Delete Button Logic
@@ -99,8 +101,7 @@ public class ListaFormas extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(!lista.isSelectionEmpty()){
-					editPanel.getColorButton().setBackground(lista.getSelectedValue().getCor());
-					drawArea.getEditor().getArrayFormas().get(lista.getSelectedIndex()).setSelected();
+					editPanel.setupPanel(lista.getSelectedValue());
 					cardLayout.show(getContentPane(), EDITPANEL);
 					drawArea.repaint();
 				}

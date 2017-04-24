@@ -34,6 +34,13 @@ public class Circuferencia extends Forma {
 		}
 	}
 	
+	public void setRaio(double raio) {
+		this.raio = raio;
+	}
+	
+	public double getRaio() {
+		return raio;
+	}
 	public String toString() {
 		return "Circunferencia";
 	}

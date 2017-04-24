@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -9,24 +10,35 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import formas2D.Circuferencia;
 import formas2D.Forma;
+import formas2D.Retangulo;
 
+@SuppressWarnings("serial")
 public class EditPanel extends JPanel {
+	private final int DEFAULTLOCATIONSX[] = {0,0,0,0};
+	private final int DEFAULTLOCATIONSY[] = {0,0,0,0};
 	private JButton edit_Color;
+	private JTextField locationXTextField, locationYTextField, larguraTextField, alturaTextField, raioTextField;
 	private Forma selectedForma;
+	private JLabel colorLabel, locationXLabel, locationYLabel, larguraLabel, alturaLabel, raioLabel;
+	private JPanel editArea;
 	private ListaFormas listFrame;
-	private DefaultListModel<Forma> list;
 	private DrawAreaPanel drawArea;
 	public EditPanel(ListaFormas listaFrame) {
 		this.listFrame = listaFrame;
-		selectedForma = listaFrame.getList().getSelectedValue();
+		selectedForma = new Retangulo(Color.BLACK, DEFAULTLOCATIONSX, DEFAULTLOCATIONSY);
+		locationXTextField = new JTextField();
+		locationYTextField = new JTextField();
+		larguraTextField = new JTextField();
+		alturaTextField = new JTextField();
+		raioTextField = new JTextField();
 		drawArea = listaFrame.getDrawArea();
 		setupGui();
 	}
@@ -42,71 +54,93 @@ public class EditPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				drawArea.getEditor().getArrayFormas().get(listFrame.getList().getSelectedIndex()).setUnselected();
+				selectedForma.setUnselected();
 				listFrame.changeLayout(listFrame.LISTPANEL);
+				resetEdit();
 				drawArea.repaint();
 			}
 		});
 		edit_Color = new JButton();
+		edit_Color.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ColorChooser myColorChooser = new ColorChooser();
+				Color corAux = myColorChooser.showDialog(null, "COR", Color.WHITE);
+				if(corAux != null){
+					edit_Color.setBackground(corAux);
+					selectedForma.setCor(corAux);
+					drawArea.repaint();
+				}
+				
+			}
+		});
 		setMainColors(edit_Color, Color.BLACK);
 		//Labels
-		JLabel colorLabel = new JLabel("Editar Cor", SwingConstants.CENTER);
-		JLabel locationLabel = new JLabel("Editar Localizacao", SwingConstants.CENTER);
-		JLabel sizeLabel = new JLabel("Editar Tamanho", SwingConstants.CENTER);
+		colorLabel = new JLabel("Editar Cor", SwingConstants.CENTER);
+		locationXLabel = new JLabel("Editar X", SwingConstants.CENTER);
+		locationYLabel = new JLabel("Editar Y", SwingConstants.CENTER);
+		larguraLabel = new JLabel("Editar Largura", SwingConstants.CENTER);
+		alturaLabel = new JLabel("Editar Altura", SwingConstants.CENTER);
+		raioLabel = new JLabel("Editar Raio", SwingConstants.CENTER);
 		
 		//Text Fields
-		Integer x =  new Integer(selectedForma.getCenter().x);
-		Integer y =  new Integer(selectedForma.getCenter().y);
-		JTextField locationXTextField = new JTextField(x.toString());
 		locationXTextField.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				selectedForma.setCenter(new Point(Integer.parseInt(locationXTextField.getText()), y));
+				selectedForma.setCenter(new Point(Integer.parseInt(locationXTextField.getText()), Integer.parseInt(locationYTextField.getText())));
 				selectedForma.refactor();
 				drawArea.repaint();
 			}
 		});
 		
-		JTextField locationYTextField = new JTextField(y.toString());
 		locationYTextField.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				selectedForma.setCenter(new Point(x, Integer.parseInt(locationYTextField.getText())));
+				selectedForma.setCenter(new Point(Integer.parseInt(locationXTextField.getText()), Integer.parseInt(locationYTextField.getText())));
 				selectedForma.refactor();
 				drawArea.repaint();
 			}
 		});
-		Integer largura =  new Integer(selectedForma.getLargura());
-		JTextField larguraTextField = new JTextField(largura.toString());
 		larguraTextField.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				selectedForma.setLargura(Integer.parseInt(larguraTextField.getText()));
+				selectedForma.setLargura(-Integer.parseInt(larguraTextField.getText()));
 				selectedForma.refactor();
 				drawArea.repaint();
 			}
 		});
-		Integer altura =  new Integer(selectedForma.getAltura());
-		JTextField alturaTextField = new JTextField(altura.toString());
 		alturaTextField.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				selectedForma.setAltura(Integer.parseInt(alturaTextField.getText()));
+				selectedForma.setAltura(-Integer.parseInt(alturaTextField.getText()));
 				selectedForma.refactor();
 				drawArea.repaint();
 			}
 		});
+		raioTextField.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(selectedForma instanceof Circuferencia) {
+					((Circuferencia) selectedForma).setRaio(Integer.parseInt(raioTextField.getText()));
+					selectedForma.refactor();
+					drawArea.repaint();
+				}
+			}
+		});
+		
 		
 		//Panels
-		JPanel editArea =  new JPanel(new GridLayout(12,5));
+		editArea =  new JPanel(new GridLayout(12,5));
 		setMainColors(editArea, Color.GRAY);
 		//Constrains
 		GridBagConstraints gbc_Back = new GridBagConstraints();
@@ -124,16 +158,57 @@ public class EditPanel extends JPanel {
 		gbc_EditArea.gridy = 0;
 		gbc_EditArea.weightx = 1;
 		gbc_EditArea.weighty = 0.95;
-		//Add.
+		//Add...
 		add(editArea, gbc_EditArea); add(back,gbc_Back);
 		//editArea Add...
 		editArea.add(colorLabel);
 		editArea.add(edit_Color);
-		editArea.add(locationLabel);
+		editArea.add(locationXLabel);
+		editArea.add(locationXTextField);
+		editArea.add(locationYLabel);
+		editArea.add(locationYTextField);
 	}	
 	public JButton getColorButton() {
 		return edit_Color;
 	}
+	public void selectEdit() {
+		if(selectedForma instanceof Circuferencia) {
+			editArea.add(raioLabel);
+			editArea.add(raioTextField);
+			raioTextField.setText(Integer.toString((int) ((Circuferencia)selectedForma).getRaio()));
+		}
+		else {
+			editArea.add(alturaLabel);
+			editArea.add(alturaTextField);
+			editArea.add(larguraLabel);
+			editArea.add(larguraTextField);
+		}
+	}
+	
+	public void resetEdit() {
+		if(selectedForma instanceof Circuferencia) {
+			editArea.remove(raioLabel);
+			editArea.remove(raioTextField);
+		}
+		else {
+			editArea.remove(alturaLabel);
+			editArea.remove(alturaTextField);
+			editArea.remove(larguraLabel);
+			editArea.remove(larguraTextField);
+		}
+	}
+	
+	public void setupPanel(Forma f) {
+		selectedForma = f;
+		selectEdit();
+		selectedForma.setSelected();
+		edit_Color.setBackground(selectedForma.getCor());
+		locationXTextField.setText(Integer.toString(selectedForma.getCenter().x));
+		locationYTextField.setText(Integer.toString(selectedForma.getCenter().y));
+		alturaTextField.setText(Integer.toString(-selectedForma.getAltura()));
+		larguraTextField.setText(Integer.toString(-selectedForma.getLargura()));
+	}
+	
 	
 	private void setMainColors(Component c, Color background) {
 		c.setBackground(background);
