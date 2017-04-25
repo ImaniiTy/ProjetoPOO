@@ -22,6 +22,13 @@ public class Circuferencia extends Forma {
 		reset();
 		calculatePoints(getCenter().x, getCenter().y);
 	}
+	/*
+	Para criacao dos pontos da circunferencia eu usei o conceito de seno e conseno para cada ponto eu fiz:
+	Coordenada X = (Centro X da figura) + raio*cos(angulo)
+	Coordenada Y = (Centro Y da figura) + raio*sen(angulo)
+	Onde o angulo comeca de 0 e vai aumentando de 10 em 10 ate chegar a 360 , fazendo assim os 36 pontos da
+	circunferencia.
+	*/
 	public void calculatePoints(int centerX, int centerY) {
 		double angulo = 0;
 		int x,y;

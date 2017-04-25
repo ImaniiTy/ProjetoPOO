@@ -7,9 +7,21 @@ import java.awt.Polygon;
 import gui.NegativeNumberException;
 
 @SuppressWarnings("serial")
+/*
+toda forma extende poligono que é feito com 2 vetores: um com as coordenadas X e outro com as coordenadas Y. Alem
+do numero de pontos que serao feitos as partir desse vertor. Cada forma implementa o poligono de uma jeito diferente
+Retangulo:
+	-Usa os 4 pontos para ser feito.
+Triangulo:
+	-Usa somente 3 dos 4 pontos para ser criado.
+Circunferencia:
+	-Usa a distancia entre coordenada X inicial(quando o mouse é presionado) e a coordenada X final(quando o mouse é solto)
+	para calcular o raio e a partir dele criar os pontos do circulo.
+*/
 public abstract class Forma extends Polygon {
 	protected Color cor;
 	protected int locationsX[], locationsY[], locationsXFromCenter[], locationsYFromCenter[], altura, largura;
+	//Variavel usada para saber se a forma esta selecinada e desenhar a borda de selecao.
 	protected boolean isSelected = false;
 	protected Point center;
 
@@ -115,8 +127,17 @@ public abstract class Forma extends Polygon {
 	public void setLargura(int largura) {
 		this.largura = largura;
 	}
+	/*
+	Como toda forma tem sua propria logica para criacao cada uma delas tem que implemtar de forma diferente
+	a funcao de recriacao
+	*/
 	public abstract void refactor();
-	
+	/*
+	Para facilitar a edicao do local e do tamanho das formas eu uso as localizacao dadas no construtor
+	para calcular a altura e o centro da forma, e crio as formas com esses novos pontos em fucao 
+	dessas variaveis (altura,largura e centro).
+
+	*/
 	public void calculateAlturaLargura() {
 		altura = locationsY[0] - locationsY[2];
 		largura = locationsX[0] - locationsX[2];
