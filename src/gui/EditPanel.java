@@ -25,6 +25,7 @@ public class EditPanel extends JPanel {
 	private final int DEFAULTLOCATIONSY[] = {0,0,0,0};
 	private JButton edit_Color;
 	private JTextField locationXTextField, locationYTextField, larguraTextField, alturaTextField, raioTextField;
+	//variavel que guarda a forma selecionada
 	private Forma selectedForma;
 	private JLabel colorLabel, locationXLabel, locationYLabel, larguraLabel, alturaLabel, raioLabel;
 	private JPanel editArea;
@@ -83,7 +84,14 @@ public class EditPanel extends JPanel {
 		alturaLabel = new JLabel("Editar Altura", SwingConstants.CENTER);
 		raioLabel = new JLabel("Editar Raio", SwingConstants.CENTER);
 
+
 		//Text Fields
+		
+		/*
+		Para editar as formas eu chamo a funcao refactor que cada forma implenta e refaz a forma com as alteracoes feitas e por fim do repaint na area
+		de desenho
+		*/
+
 		locationXTextField.addActionListener(new ActionListener() {
 
 			@Override

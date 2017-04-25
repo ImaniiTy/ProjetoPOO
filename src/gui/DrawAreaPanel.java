@@ -17,14 +17,33 @@ public class DrawAreaPanel extends JPanel{
 	private MouseAdapter mAdapter;
 	private MouseMotionAdapter mMotionAdapter;
 	private Editor editor;
-        private Principal principalFrame;
-	
+    private Principal principalFrame;
+	/*
+
+	*/
 	public DrawAreaPanel(Principal principalFrame) {
-            this.principalFrame = principalFrame;
+        this.principalFrame = principalFrame;
 		setLayout(new BorderLayout());
 		setBackground(Color.WHITE);
 		editor = new Editor();
 		mAdapter = new MouseAdapter() {
+			/*
+			Pega a localizacaodo incial quando o mouse é pressionado(ponto[0]) e a posicao final quando
+			o mouse é solto(ponto[2]) e a partir dele acha mais 2 pontos para formar os 4 pontos base 
+			para as figuras
+
+						[0]----------------------[1]
+						 |                        |
+						 |                        |
+						 |                        |
+						 |                        |
+						 |                        |
+						 |                        |
+						[3]----------------------[2]
+			e passando esses pontos como parametro uma funcao no editor cria e adiciona as formas no array.
+
+
+			*/
 			@Override
 			public void mousePressed(MouseEvent e) {
 				locationsX[0] = e.getPoint().x;
@@ -49,6 +68,10 @@ public class DrawAreaPanel extends JPanel{
 
 		mMotionAdapter = new MouseMotionAdapter() {
 			@Override
+			/*
+			Para o efeito ver a imagem enquanto arrasta o mouse eu salvo a forma anterior em uma variavel
+			auxiliar no editor e cada vez que arrasta o mouse eu deleto a forma anterior do array.
+			*/
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
 				super.mouseDragged(e);
@@ -80,7 +103,7 @@ public class DrawAreaPanel extends JPanel{
 	public int[] getLocationsY() {
 		return locationsY;
 	}
-	
+	//Funcao usada para acessar o editor vinculado a area de desenho e assim acessar suas funcoes
 	public Editor getEditor() {
 		return editor;
 	}

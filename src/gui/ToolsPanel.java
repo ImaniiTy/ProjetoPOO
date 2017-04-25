@@ -35,8 +35,6 @@ public class ToolsPanel extends JPanel {
 		buttonGroup.add(cursor);
 		try {
 			cursor.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("Icon2.gif"))));
-			cursor.setPressedIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("PressedIcon2.jpg"))));
-			cursor.setSelectedIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("PressedIcon2.jpg"))));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -52,8 +50,6 @@ public class ToolsPanel extends JPanel {
 		buttonGroup.add(retangulo);
 		try {
 			retangulo.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("IconQ.gif"))));
-			retangulo.setPressedIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("PressedIconQ.jpg"))));
-			retangulo.setSelectedIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("PressedIconQ.jpg"))));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -68,8 +64,6 @@ public class ToolsPanel extends JPanel {
 		buttonGroup.add(circulo);
 		try {
 			circulo.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("IconS.gif"))));
-			circulo.setPressedIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("PressedIconS.jpg"))));
-			circulo.setSelectedIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("PressedIconS.jpg"))));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -84,17 +78,16 @@ public class ToolsPanel extends JPanel {
 		buttonGroup.add(triangulo);
 		try {
 			triangulo.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("IconT.gif"))));
-			triangulo.setPressedIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("PressedIconT.jpg"))));
-			triangulo.setSelectedIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("PressedIconT.jpg"))));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		triangulo.setPreferredSize(new Dimension(52, 40));
+		triangulo.setPreferredSize(new Dimension(58, 40));
 		triangulo.setMaximumSize(new Dimension(58,40));
 		triangulo.setBackground(new Color(63, 63, 63));
 		triangulo.setContentAreaFilled(false);
 		triangulo.setOpaque(true);
+		triangulo.setSelectedIcon(null);
 		add(triangulo);
 		//Button Logic
 		cursor.addActionListener(new ActionListener() {
@@ -102,10 +95,6 @@ public class ToolsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				drawArea.getEditor().setShape(Editor.MOUSE);
-				retangulo.setSelected(false);
-				circulo.setSelected(false);
-				cursor.setSelected(true);
-				triangulo.setSelected(false);
 			}
 		});
 		
@@ -114,10 +103,6 @@ public class ToolsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				drawArea.getEditor().setShape(Editor.RETANGULO);
-				retangulo.setSelected(true);
-				circulo.setSelected(false);
-				cursor.setSelected(false);
-				triangulo.setSelected(false);
 			}
 		});
 		
@@ -126,10 +111,6 @@ public class ToolsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				drawArea.getEditor().setShape(Editor.TRIANGULO);
-				retangulo.setSelected(false);
-				circulo.setSelected(false);
-				cursor.setSelected(false);
-				triangulo.setSelected(true);
 			}
 		});
 		
@@ -138,10 +119,6 @@ public class ToolsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				drawArea.getEditor().setShape(Editor.CIRCUNFERENCIA);
-				retangulo.setSelected(false);
-				circulo.setSelected(true);
-				cursor.setSelected(false);
-				triangulo.setSelected(false);
 			}
 		});
 	}
