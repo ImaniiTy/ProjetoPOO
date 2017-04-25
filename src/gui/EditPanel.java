@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -53,7 +52,7 @@ public class EditPanel extends JPanel {
 		back.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				selectedForma.setUnselected();
 				listFrame.changeLayout(listFrame.LISTPANEL);
 				resetEdit();
@@ -62,7 +61,7 @@ public class EditPanel extends JPanel {
 		});
 		edit_Color = new JButton();
 		edit_Color.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ColorChooser myColorChooser = new ColorChooser();
@@ -72,7 +71,7 @@ public class EditPanel extends JPanel {
 					selectedForma.setCor(corAux);
 					drawArea.repaint();
 				}
-				
+
 			}
 		});
 		setMainColors(edit_Color, Color.BLACK);
@@ -83,62 +82,81 @@ public class EditPanel extends JPanel {
 		larguraLabel = new JLabel("Editar Largura", SwingConstants.CENTER);
 		alturaLabel = new JLabel("Editar Altura", SwingConstants.CENTER);
 		raioLabel = new JLabel("Editar Raio", SwingConstants.CENTER);
-		
+
 		//Text Fields
 		locationXTextField.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				selectedForma.setCenter(new Point(Integer.parseInt(locationXTextField.getText()), Integer.parseInt(locationYTextField.getText())));
+
+				try{
+					selectedForma.setCenter(new Point(Integer.parseInt(locationXTextField.getText()), Integer.parseInt(locationYTextField.getText())));
+				}catch (NumberFormatException | NegativeNumberException ex) {
+					ErrorPopUp notNumberPopUp = new NotNumberErrorPopUp();
+				}
 				selectedForma.refactor();
 				drawArea.repaint();
 			}
 		});
-		
+
 		locationYTextField.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				selectedForma.setCenter(new Point(Integer.parseInt(locationXTextField.getText()), Integer.parseInt(locationYTextField.getText())));
+				try{
+					selectedForma.setCenter(new Point(Integer.parseInt(locationXTextField.getText()), Integer.parseInt(locationYTextField.getText())));
+				}catch (NumberFormatException  | NegativeNumberException ex) {
+					ErrorPopUp notNumberPopUp = new NotNumberErrorPopUp();
+				}
+
 				selectedForma.refactor();
 				drawArea.repaint();
 			}
 		});
+		//Largura e altura podem ser negativas, pois troca a orientacao do triangulo
 		larguraTextField.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				selectedForma.setLargura(-Integer.parseInt(larguraTextField.getText()));
+				try{
+					selectedForma.setLargura(-Integer.parseInt(larguraTextField.getText()));
+				}catch (NumberFormatException ex) {
+					ErrorPopUp notNumberPopUp = new NotNumberErrorPopUp();
+				}
 				selectedForma.refactor();
 				drawArea.repaint();
 			}
 		});
 		alturaTextField.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				selectedForma.setAltura(-Integer.parseInt(alturaTextField.getText()));
+				try{
+					selectedForma.setAltura(-Integer.parseInt(alturaTextField.getText()));
+				}catch (NumberFormatException ex) {
+					ErrorPopUp notNumberPopUp = new NotNumberErrorPopUp();
+				}
 				selectedForma.refactor();
 				drawArea.repaint();
 			}
 		});
 		raioTextField.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(selectedForma instanceof Circuferencia) {
-					((Circuferencia) selectedForma).setRaio(Integer.parseInt(raioTextField.getText()));
+					try{
+						((Circuferencia) selectedForma).setRaio(Integer.parseInt(raioTextField.getText()));
+					}catch (NumberFormatException | NegativeNumberException ex) {
+						ErrorPopUp notNumberPopUp = new NotNumberErrorPopUp();
+					}
 					selectedForma.refactor();
 					drawArea.repaint();
 				}
 			}
 		});
-		
-		
+
+
 		//Panels
 		editArea =  new JPanel(new GridLayout(12,5));
 		setMainColors(editArea, Color.GRAY);
@@ -150,7 +168,7 @@ public class EditPanel extends JPanel {
 		gbc_Back.gridy = 1;
 		gbc_Back.weightx = 1;
 		gbc_Back.weighty = 0.05;
-		
+
 		GridBagConstraints gbc_EditArea = new GridBagConstraints();
 		gbc_EditArea.anchor = GridBagConstraints.CENTER;
 		gbc_EditArea.fill = GridBagConstraints.BOTH;
@@ -184,7 +202,7 @@ public class EditPanel extends JPanel {
 			editArea.add(larguraTextField);
 		}
 	}
-	
+
 	public void resetEdit() {
 		if(selectedForma instanceof Circuferencia) {
 			editArea.remove(raioLabel);
@@ -197,7 +215,7 @@ public class EditPanel extends JPanel {
 			editArea.remove(larguraTextField);
 		}
 	}
-	
+
 	public void setupPanel(Forma f) {
 		selectedForma = f;
 		selectEdit();
@@ -208,8 +226,8 @@ public class EditPanel extends JPanel {
 		alturaTextField.setText(Integer.toString(-selectedForma.getAltura()));
 		larguraTextField.setText(Integer.toString(-selectedForma.getLargura()));
 	}
-	
-	
+
+
 	private void setMainColors(Component c, Color background) {
 		c.setBackground(background);
 		c.setForeground(Color.WHITE);

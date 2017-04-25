@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
 
+import gui.NegativeNumberException;
+
 @SuppressWarnings("serial")
 public abstract class Forma extends Polygon {
 	protected Color cor;
@@ -81,8 +83,12 @@ public abstract class Forma extends Polygon {
 		return center;
 	}
 	
-	public void setCenter(Point center) {
-		this.center = center;
+	public void setCenter(Point center) throws NegativeNumberException {
+		if (center.x < 0|| center.y < 0) {
+			throw new NegativeNumberException();
+		} else {
+			this.center = center;
+		}
 	}
 	
 	/**

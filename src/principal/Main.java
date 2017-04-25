@@ -1,4 +1,4 @@
-package teste;
+package principal;
 
 import java.awt.EventQueue;
 
@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 import gui.Principal;
 
-public class tsteee {
+public class Main {
 
 	/**
 	 * Launch the application.
@@ -15,7 +15,7 @@ public class tsteee {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Principal teste = new Principal();
+					Principal principal = new Principal();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

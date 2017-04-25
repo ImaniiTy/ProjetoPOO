@@ -5,8 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class Principal {
 	protected static final int ALTURA = 600, LARGURA = 800;
